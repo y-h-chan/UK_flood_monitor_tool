@@ -43,7 +43,6 @@ def fetch_station_readings(
     now = datetime.utcnow()
     past_24h = now - timedelta(hours=24)
     start_date_str = str(past_24h.isoformat(timespec="seconds") + "Z")
-    print(start_date_str)
     query_params = {
         "since": start_date_str,
     }
@@ -52,7 +51,6 @@ def fetch_station_readings(
         response = requests.get(api_url, params=query_params)
         response.raise_for_status()
         readings_data = response.json()["items"]
-        print(readings_data)
         if not readings_data:
             return None, "No readings found for this station in the last 24 hours."
 
@@ -83,7 +81,6 @@ def create_plot_and_table(df, station_label):
     fig = Figure(figsize=(10, 6))
     ax = fig.add_subplot(111)
     df.filter(like=df["measure"].iloc[0])
-    print(pd.unique(df["measure"]))
     ax.plot(df["dateTime"], df["value"], marker="o", linestyle="-")
     ax.set_xlabel("Time")
     ax.set_ylabel(f"Reading Value ({df['measure'].iloc[0].split('/')[-1]})")

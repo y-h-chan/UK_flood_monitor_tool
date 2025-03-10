@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Monitoring Station Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { padding-top: 20px; }
+        .plot-container { margin-top: 20px; }
+        .table-container { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Real Time Flood Monitoring</h1>
+            <p>Select a station to view readings for the last 24 hours.</p>
+        </div>
+
+        <form method="post" class="form-inline">
+            <div class="form-group mb-2">
+                <label for="station_id" class="mr-2">Select Station:</label>
+                <select class="form-control" id="station_id" name="station_id" required>
+                    <option value="">-- Select a Station --</option>
+                    {% for label, notation in stations %}
+                        <option value="{{ notation }}" {% if selected_station_label == label %}selected{% endif %} >{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 ml-2">Show Readings</button>
+            <input type="hidden" name="station_label" id="station_label_input"> </form>
+
+        {% if error_message %}
+        <div class="alert alert-danger mt-3" role="alert">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        {% if plot_url %}
+        <div class="plot-container mt-4">
+            <h2>Station Readings Graph - {{ selected_station_label }}</h2>
+            <img src="{{ plot_url }}" alt="Station Readings Plot" class="img-fluid">
+        </div>
+        {% endif %}
+
+        {% if table_html %}
+        <div class="table-container mt-4">
+            <h2>Station Readings Data - {{ selected_station_label }}</h2>
+            {{ table_html|safe }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('station_id').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var stationLabel = selectedOption.text;
+            document.getElementById('station_label_input').value = stationLabel; // Set hidden input value
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

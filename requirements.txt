@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests  
+pandas
+matplotlib
+python-dateutil
+Jinja2 # For templates (FastAPI uses Jinja2 as well)
+markupsafe # For template safety
+python-multipart

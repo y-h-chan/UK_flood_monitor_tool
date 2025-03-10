@@ -84,14 +84,13 @@ http://localhost:8000
 4.  **Data Display:** The page will update to display:
     *   **Line Graph:** A line graph visualizing the station's readings over the last 24 hours. The graph shows time in UTC on the x-axis and the reading value on the y-axis.
     *   **Data Table:**  A table below the graph displaying the raw readings data, including `dateTime`, `value`, and `unit`.
-5.  **Error Handling:** If there are issues fetching data or no readings are available, an error message will be displayed on the page.
 
 ## Docker Information
 
 This tool is Dockerized for easy deployment and to ensure consistent execution environments. The `Dockerfile` is included in the project root directory.
 
 *   **Building the Docker Image:**  Use `docker build -t flood-tool-app .` in the project root.
-*   **Running the Docker Container:** Use `docker run -d -p 5000:5000 flood-tool-app`.
+*   **Running the Docker Container:** Use `docker run -d -p 8000:8000 flood-tool-app`.
 *   **Stopping the Container:**  Use `docker stop <container_id>` (find the container ID using `docker ps`).
 
 Docker ensures that all dependencies are correctly installed and that the application runs in a consistent environment, regardless of the host operating system.
